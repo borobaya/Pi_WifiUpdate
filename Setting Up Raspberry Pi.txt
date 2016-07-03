@@ -42,15 +42,22 @@ service bluetooth status
 
 6. Set up Node.js
    https://www.raspberrypi.org/forums/viewtopic.php?f=34&t=140747
+   https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
 
-curl -sL https://deb.nodesource.com/setup_5.x | sudo bash -
-sudo apt-get install -y nodejs
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+sudo apt-get install -y nodejs build-essential
 node -v
 npm -v
 
 # Install Bluetooth module
 sudo apt-get install -y bluetooth bluez libbluetooth-dev libudev-dev
 npm install bleno
+
+# Disable BluetoothHD 
+sudo service bluetooth stop
+sudo update-rc.d bluetooth remove
+# Use this to power Bluetooth adapter up:
+sudo hciconfig hci0 up
 
 # Install other modules
 npm install debug
