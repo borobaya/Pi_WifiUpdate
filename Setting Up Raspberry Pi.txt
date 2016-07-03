@@ -1,0 +1,59 @@
+
+1. Install and Mount Raspbian Image to SD Card
+   https://www.raspberrypi.org/documentation/installation/installing-images/README.md
+   # Install the LITE version
+
+2. Set up Wifi
+   https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md
+
+sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+
+# Add:
+network={
+    ssid="BTHub5-ZTQC"
+    psk="Your_wifi_password"
+}
+
+3. Set up SSH
+   https://www.raspberrypi.org/documentation/remote-access/ssh/
+
+sudo raspi-config
+
+4. Set up Bluetooth
+   https://www.raspberrypi.org/learning/robo-butler/bluetooth-setup/
+   http://raspberrypi.stackexchange.com/questions/40839/sap-error-on-bluetooth-service-status
+
+sudo apt-get install -y --no-install-recommends bluetooth
+sudo service bluetooth status
+sudo nano /etc/systemd/system/bluetooth.target.wants/bluetooth.service
+# Change
+# ExecStart=/usr/lib/bluetooth/bluetoothd
+# To
+# ExecStart=/usr/lib/bluetooth/bluetoothd --noplugin=sap
+sudo systemctl daemon-reload
+sudo service bluetooth restart
+service bluetooth status
+
+5. Update
+   #sudo rpi-update # Not needed in the raspbian-lite version
+   sudo apt-get update
+   sudo apt-get upgrade
+   sudo apt-get install -y git python-pip python-all-dev
+
+6. Set up Node.js
+   https://www.raspberrypi.org/forums/viewtopic.php?f=34&t=140747
+
+curl -sL https://deb.nodesource.com/setup_5.x | sudo bash -
+sudo apt-get install -y nodejs
+node -v
+npm -v
+
+# Install Bluetooth module
+sudo apt-get install -y bluetooth bluez libbluetooth-dev libudev-dev
+npm install bleno
+
+# Install other modules
+npm install debug
+
+
+
